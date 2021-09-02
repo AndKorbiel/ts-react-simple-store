@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import SingleProduct from "./components/SingleProduct";
+import SidebarCart from './components/SidebarCart';
 // styles
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import './App.css';
 
-interface ProductType {
+export interface ProductType {
     title: string,
     category: string,
     price: number,
@@ -14,6 +15,13 @@ interface ProductType {
 
 const App: React.FC = () => {
   const [productList, updateProductList] = useState<ProductType[]>([]);
+  const [cart, updateCart] = useState<ProductType[]>([]);
+
+  const handleAddToCart = (item: ProductType) => {
+    updateCart(prev => {
+        return [...prev, {...item}]
+    })
+  }
 
   useEffect(()=> {
       const getProducts = async () : Promise<Array<ProductType>> => {
@@ -33,10 +41,21 @@ const App: React.FC = () => {
                 </Grid>
                 {productList.map(product => {
                     return (
-                        <SingleProduct title={product.title} category={product.category} price={product.price} image={product.image}/>
+                        <SingleProduct
+                            product={product}
+                            handleAdd={handleAddToCart}
+                        />
+                    )
+                })}
+                <hr />
+                <p>Cart</p>
+                {cart.map(item => {
+                    return (
+                        <p>{item.title}</p>
                     )
                 })}
             </Grid>
+            <SidebarCart />
         </Container>
     </div>
   );
