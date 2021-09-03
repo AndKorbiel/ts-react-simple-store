@@ -44,18 +44,13 @@ const App: React.FC = () => {
                         <SingleProduct
                             product={product}
                             handleAdd={handleAddToCart}
+                            context="list"
                         />
                     )
                 })}
                 <hr />
-                <p>Cart</p>
-                {cart.map(item => {
-                    return (
-                        <p>{item.title}</p>
-                    )
-                })}
             </Grid>
-            <SidebarCart />
+            <SidebarCart data={cart} />
         </Container>
     </div>
   );

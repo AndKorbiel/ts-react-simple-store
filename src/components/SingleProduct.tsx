@@ -7,17 +7,19 @@ import {singleProductStyles} from "./SingleProduct.styles.ts";
 
 type ProductProps = {
     product: ProductType,
-    handleAdd: (product: ProductType)=> void
+    handleAdd: (product: ProductType)=> void,
+    context: string
 }
 
-const SingleProduct: React.FC<ProductProps> = ({product, handleAdd}) => {
+const SingleProduct: React.FC<ProductProps> = ({product, handleAdd, context}) => {
     const classes = singleProductStyles();
+    console.log(context)
 
     return (
             <Grid md className={classes.item}>
-                <Paper className={classes.paper}>
+                <Paper className={context === 'cart' ? classes.cartPaper : classes.paper}>
                     <h3 className={classes.h3}>{product.title}</h3>
-                    <img className={classes.image} src={product.image} />
+                    <img className={context === 'cart' ? classes.cartImage : classes.image} src={product.image} />
                     <div className={classes.desc}>
                         <hr />
                         <p>{product.category}</p>
