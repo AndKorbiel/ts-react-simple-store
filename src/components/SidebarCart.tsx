@@ -4,12 +4,15 @@ import {useState} from "react";
 import {sidebarCartStyles} from './SidebarCart.styles';
 import {ProductType} from "../App";
 import SingleProduct from "./SingleProduct";
+import Button from "@material-ui/core/Button";
 
 type Props = {
-    data: ProductType[]
+    data: ProductType[],
+    handleAdd: (product: ProductType) => void,
+    handleRemove: (product: ProductType) => void,
 }
 
-const SidebarCart: React.FC<Props> = ({data}) => {
+const SidebarCart: React.FC<Props> = ({data, handleAdd, handleRemove}) => {
     const [isOpen, toggleOpen] = useState(false);
     const handleOpen = () => {
         toggleOpen(!isOpen)
@@ -23,11 +26,16 @@ const SidebarCart: React.FC<Props> = ({data}) => {
                 <h3>Cart</h3>
                 {data.map(item => {
                     return (
-                        <SingleProduct
-                            product={item}
-                            handleAdd={()=> {}}
-                            context="cart"
-                        />
+                        <>
+                            <SingleProduct
+                                product={item}
+                                handleAdd={()=> {}}
+                                context="cart"
+                            />
+                            <Button variant="contained" color="primary" onClick={() => handleAdd(item)}>+</Button>
+                            <Button variant="contained" color="primary" onClick={() => handleRemove(item)}>-</Button>
+                        </>
+
                     )
                 })}
             </Drawer>

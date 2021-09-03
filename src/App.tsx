@@ -10,7 +10,8 @@ export interface ProductType {
     title: string,
     category: string,
     price: number,
-    image: string
+    image: string,
+    id: number
 }
 
 const App: React.FC = () => {
@@ -19,8 +20,15 @@ const App: React.FC = () => {
 
   const handleAddToCart = (item: ProductType) => {
     updateCart(prev => {
-        return [...prev, {...item}]
+        // TODO fix this func
+        prev.forEach(el => {
+            if (el.id === item.id) {
+                return [...prev, {...item, quantity: 2 }]
+            }
+        })
+        return [...prev, {...item, quantity: 1 }]
     })
+    console.log(cart)
   }
 
   useEffect(()=> {
@@ -50,7 +58,11 @@ const App: React.FC = () => {
                 })}
                 <hr />
             </Grid>
-            <SidebarCart data={cart} />
+            <SidebarCart
+                data={cart}
+                handleAdd={handleAddToCart}
+                handleRemove={handleAddToCart}
+            />
         </Container>
     </div>
   );

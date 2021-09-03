@@ -13,7 +13,6 @@ type ProductProps = {
 
 const SingleProduct: React.FC<ProductProps> = ({product, handleAdd, context}) => {
     const classes = singleProductStyles();
-    console.log(context)
 
     return (
             <Grid md className={classes.item}>
@@ -24,9 +23,9 @@ const SingleProduct: React.FC<ProductProps> = ({product, handleAdd, context}) =>
                         <hr />
                         <p>{product.category}</p>
                         <p className={classes.bold}>{product.price} zł</p>
-                        <Button variant="contained" color="primary" onClick={() => handleAdd(product)}>
+                        {context !== 'cart' && <Button variant="contained" color="primary" onClick={() => handleAdd(product)}>
                             Add to cart
-                        </Button>
+                        </Button>}
                     </div>
                 </Paper>
             </Grid>
