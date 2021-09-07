@@ -33,6 +33,7 @@ const SidebarCart: React.FC<Props> = ({data, handleAdd, handleRemove}) => {
                                 context="cart"
                             />
                             <Button variant="contained" color="primary" onClick={() => handleAdd(item)}>+</Button>
+                            <p>{item.quantity}</p>
                             <Button variant="contained" color="primary" onClick={() => handleRemove(item)}>-</Button>
                         </>
 

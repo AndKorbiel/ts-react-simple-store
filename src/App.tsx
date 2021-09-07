@@ -11,7 +11,8 @@ export interface ProductType {
     category: string,
     price: number,
     image: string,
-    id: number
+    id: number,
+    quantity: number
 }
 
 const App: React.FC = () => {
@@ -20,15 +21,19 @@ const App: React.FC = () => {
 
   const handleAddToCart = (item: ProductType) => {
     updateCart(prev => {
-        // TODO fix this func
-        prev.forEach(el => {
-            if (el.id === item.id) {
-                return [...prev, {...item, quantity: 2 }]
-            }
-        })
+        const isItemInCart = prev.find(el => el.id === item.id)
+        if (isItemInCart) {
+            return prev.map(el => {
+                if (el.id === item.id) {
+                    console.log(el)
+                    return {...item, quantity: el.quantity + 1}
+                } else {
+                    return {...item}
+                }
+            })
+        }
         return [...prev, {...item, quantity: 1 }]
     })
-    console.log(cart)
   }
 
   useEffect(()=> {
